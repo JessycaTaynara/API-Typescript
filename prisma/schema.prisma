@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model adocoes {
+  id_gato           Int
+  email_usuario     String            @db.VarChar(255)
+  id                Int               @id @default(autoincrement())
+  usuarios          usuarios          @relation(fields: [email_usuario], references: [email], onDelete: NoAction, onUpdate: NoAction, map: "adocoes_email_dono_fkey")
+  gatos_para_adotar gatos_para_adotar @relation(fields: [id_gato], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model gatos_para_adotar {
+  nome      String    @db.VarChar(255)
+  sexo      String    @db.VarChar(255)
+  raca      String    @db.VarChar(255)
+  cor       String    @db.VarChar(255)
+  adotado   Boolean   @default(false)
+  descricao String    @db.VarChar(255)
+  id        Int       @id(map: "gatos_pkey") @default(autoincrement())
+  adocoes   adocoes[]
+}
+
+model solicitacoes {
+  id                    Int      @id @default(autoincrement())
+  usuario_solicitante   String   @db.VarChar(255)
+  gato_nome             String   @db.VarChar(255)
+  gato_sexo             String   @db.VarChar(255)
+  gato_raca             String   @db.VarChar(255)
+  gato_cor              String   @db.VarChar(255)
+  gato_descricao        String   @db.VarChar(255)
+  solicitacao_rejeitada Boolean  @default(false)
+  usuarios              usuarios @relation(fields: [usuario_solicitante], references: [email], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model usuarios {
+  nome         String         @db.VarChar(255)
+  email        String         @id(map: "usuarios_comuns_pkey") @db.VarChar(255)
+  senha        String         @db.VarChar(255)
+  tipo         String         @db.VarChar(255)
+  adocoes      adocoes[]
+  solicitacoes solicitacoes[]
+}
