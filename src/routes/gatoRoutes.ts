@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { criarGatoController, deletarGatoController, listarGatosController } from "../modules/gato";
+import { criarGatoController, deletarGatoController, listarGatosController, listarUmGatosController } from "../modules/gato";
 
 const routes = Router()
 
@@ -12,6 +12,9 @@ routes
     })
     .get("/gatos", (req: Request, res: Response)=>{
         listarGatosController.handle(req, res)
+    })
+    .get("/gato/:id", (req: Request, res: Response)=>{
+        listarUmGatosController.handle(req, res)
     })
 
 export default routes 
