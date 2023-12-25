@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { criarGatoController, deletarGatoController } from "../modules/gato";
+import { criarGatoController, deletarGatoController, listarGatosController } from "../modules/gato";
 
 const routes = Router()
 
@@ -9,6 +9,9 @@ routes
     })
     .delete("/deletarGato/:id", (req: Request, res: Response) =>{
         deletarGatoController.handle(req, res)
+    })
+    .get("/gatos", (req: Request, res: Response)=>{
+        listarGatosController.handle(req, res)
     })
 
 export default routes 
