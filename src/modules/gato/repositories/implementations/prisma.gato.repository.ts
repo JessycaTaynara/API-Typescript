@@ -1,0 +1,58 @@
+import { GatoEntity } from "../../entities/gatoEntity";
+import { PrismaClient } from "@prisma/client";
+import { GatoPrismaMapping } from "../../mappings/gato.prisma.mapping";
+import { GatoRepository } from "../gato.repository";
+
+export class PrismaGatoRepository implements GatoRepository{
+    private prisma
+    constructor(){
+        this.prisma = new PrismaClient()
+    }
+    async criar(gato: GatoEntity):Promise<void>{
+        try {
+            const gatoParaCriar = GatoPrismaMapping.from(gato)
+            await this.prisma.gatos_para_adotar.create({data: gatoParaCriar})
+        } catch (error) {
+            throw new Error("Erro ao criar gato")
+        }
+        
+    }
+    async deletar(id: number):Promise<void>{
+        try {
+            this.prisma.gatos_para_adotar.delete({where: {id:id}})
+        } catch (error) {
+            throw new Error("Erro ao deletar gato")
+        }
+    }
+    async listar():Promise<GatoEntity[]>{
+        try {
+            const gatos = await this.prisma.gatos_para_adotar.findMany()
+            return gatos.map(gato => GatoPrismaMapping.to(gato))
+        } catch (error) {
+            throw new Error("Erro ao listar gatos")
+        }
+    }
+    async listarUm(id: number):Promise<GatoEntity>{
+        try {
+            const gato = await this.prisma.gatos_para_adotar.findUniqueOrThrow({where: {id }}) 
+            return GatoPrismaMapping.to(gato)
+        } catch (error) {
+            throw new Error("Erro ao buscar gato específico")
+        }
+    }
+    async atualizar(id: number, nome:string, sexo:string, raca:string, cor:string, adotado: boolean, descricao:string):Promise<void>{
+        try {
+            await this.prisma.gatos_para_adotar.update({where: {id}, data: {id, nome, sexo, raca, cor, descricao, adotado}})
+        } catch (error) {
+            throw new Error("Erro ao atualizar")
+        }
+    }
+    async adotar(id: number):Promise<void>{
+        try {
+            await this.prisma.gatos_para_adotar.update({where: {id}, data: {adotado: true}})
+        } catch (error) {
+            throw new Error("Erro ao adotar gato")
+        }
+    }
+
+}
