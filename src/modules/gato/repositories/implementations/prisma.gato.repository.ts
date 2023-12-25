@@ -40,9 +40,9 @@ export class PrismaGatoRepository implements GatoRepository{
             throw new Error("Erro ao buscar gato específico")
         }
     }
-    async atualizar(id: number, nome:string, sexo:string, raca:string, cor:string, adotado: boolean, descricao:string):Promise<void>{
+    async atualizar(id: number, gato:GatoEntity):Promise<void>{
         try {
-            await this.prisma.gatos_para_adotar.update({where: {id}, data: {id, nome, sexo, raca, cor, descricao, adotado}})
+            await this.prisma.gatos_para_adotar.update({where: {id}, data: gato})
         } catch (error) {
             throw new Error("Erro ao atualizar")
         }
