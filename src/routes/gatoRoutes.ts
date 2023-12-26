@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { adotarGatoController, criarGatoController, deletarGatoController, listarGatosController, listarUmGatosController } from "../modules/gato";
+import { adotarGatoController, atualizarGatoController, criarGatoController, deletarGatoController, listarGatosController, listarUmGatosController } from "../modules/gato";
 
 const routes = Router()
 
@@ -11,6 +11,7 @@ routes
         deletarGatoController.handle(req, res)
     })
     .get("/gatos", (req: Request, res: Response)=>{
+        console.log("aqui é o routes")
         listarGatosController.handle(req, res)
     })
     .get("/gato/:id", (req: Request, res: Response)=>{
@@ -18,6 +19,9 @@ routes
     })
     .put("/adotarGato/:id", (req: Request, res: Response)=>{
         adotarGatoController.handle(req, res)
+    })
+    .put("/atualizarGato/:id", (req: Request, res: Response)=>{
+        atualizarGatoController.handle(req, res)
     })
 
 export default routes 
