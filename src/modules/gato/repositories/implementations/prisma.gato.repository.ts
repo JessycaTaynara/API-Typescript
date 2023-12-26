@@ -19,7 +19,7 @@ export class PrismaGatoRepository implements GatoRepository{
     }
     async deletar(id: number):Promise<void>{
         try {
-            this.prisma.gatos_para_adotar.delete({where: {id:id}})
+            await this.prisma.gatos_para_adotar.delete({where: {id}})
         } catch (error) {
             throw new Error("Erro ao deletar gato")
         }
