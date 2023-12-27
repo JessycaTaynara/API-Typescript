@@ -5,13 +5,12 @@ const routes = Router()
 
 routes
     .post("/criarGato", (req: Request, res: Response) => {
-    criarGatoController.handle(req, res)
+        criarGatoController.handle(req, res)
     })
     .delete("/deletarGato/:id", (req: Request, res: Response) =>{
         deletarGatoController.handle(req, res)
     })
     .get("/gatos", (req: Request, res: Response)=>{
-        console.log("aqui é o routes")
         listarGatosController.handle(req, res)
     })
     .get("/gato/:id", (req: Request, res: Response)=>{
