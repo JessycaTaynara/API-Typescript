@@ -11,8 +11,8 @@ model adocoes {
   id_gato           Int
   email_usuario     String            @db.VarChar(255)
   id                Int               @id @default(autoincrement())
-  usuarios          usuarios          @relation(fields: [email_usuario], references: [email], onDelete: NoAction, onUpdate: NoAction, map: "adocoes_email_dono_fkey")
-  gatos_para_adotar gatos_para_adotar @relation(fields: [id_gato], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuarios          usuarios          @relation(fields: [email_usuario], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "adocoes_email_dono_fkey")
+  gatos_para_adotar gatos_para_adotar @relation(fields: [id_gato], references: [id], onDelete: Cascade, onUpdate: NoAction) // Alteração aqui
 }
 
 model gatos_para_adotar {
@@ -35,7 +35,7 @@ model solicitacoes {
   gato_cor              String   @db.VarChar(255)
   gato_descricao        String   @db.VarChar(255)
   solicitacao_rejeitada Boolean  @default(false)
-  usuarios              usuarios @relation(fields: [usuario_solicitante], references: [email], onDelete: NoAction, onUpdate: NoAction)
+  usuarios              usuarios @relation(fields: [usuario_solicitante], references: [email], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model usuarios {
