@@ -18,8 +18,7 @@ export class PrismaGatoRepository implements GatoRepository{
         
     }
     async deletar(id: number):Promise<void>{
-        try {//não sei fazer funcionar, da erro pois adocoes faz referência a gatos_para_adotar
-            await this.prisma.adocoes.deleteMany({ where: { id_gato: id } });
+        try {
             await this.prisma.gatos_para_adotar.delete({ where: { id } });
         } catch (error) {
             console.log("foi aqui " +error)
