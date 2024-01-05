@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://aluno_20201214010034:1520@177.136.200.206:5439/temp?schema=aluno_20201214010034"
 }
 
 model adocoes {
